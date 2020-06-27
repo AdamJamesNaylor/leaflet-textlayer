@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaflet Polygon Management Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="../dist/leaflet-textlayer.css" />
+    <link rel="stylesheet" href="lib/leaflet-geoman.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/medium-editor@5.23.3/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8" />
+    <style>
+        .map { height: 500px; margin-bottom: 10px; }
+
+        .text-layer {
+            border: 1px #000 solid;
+            padding: 2px;
+            border-radius: 3px;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+            <h1>Leaflet Text Layer Plugin</h1>
+
+            <h2>Vanilla Leaflet</h2>
+
+            <div class="map" id="map1"></div>
+
+            <h2>With geoman</h2>
+
+            <div class="map" id="map2"></div>
+
+    </div>
+    <script src="../dist/leaflet-textlayer.min.js"></script>
+    <script src="lib/leaflet-geoman.min.js"></script>
+    <script src="demo.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+/.git/
+npm-debug.log
+/node_modules/
+/dist/
+\.source*
+/cypress/screenshots
+/cypress/videos

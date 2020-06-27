@@ -1,0 +1,13 @@
+.leaflet-textlayer-tooltip {
+    padding: 0;
+    background-color: initial;
+    border: none;
+    white-space: nowrap;
+    box-shadow: none;
+    margin-top: 0;
+}
+.leaflet-textlayer-tooltip p { margin: 0; }
+.leaflet-textlayer-tooltip:before { content: none; }
+.medium-editor-element {
+    min-height: initial !important;
+}
