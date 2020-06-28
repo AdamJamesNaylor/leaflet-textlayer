@@ -16,7 +16,7 @@ Tested to support [Geoman v2.4.0](https://geoman.io/).
 
 ### npm
 
-This plugin is provided as an [npm package] which you can install as follows:
+This plugin is provided as an [npm package](https://www.npmjs.com/package/leaflet-textlayer) which you can install as follows:
 
 ```
 npm install leaflet-textlayer
