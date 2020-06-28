@@ -1,6 +1,6 @@
 {
   "name": "leaflet-textlayer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Leaflet plugin for creating text layers with configurable text editing support",
   "main": "index.js",
   "scripts": {
