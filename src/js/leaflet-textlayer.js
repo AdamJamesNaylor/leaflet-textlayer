@@ -43,7 +43,8 @@ const TextLayer = L.Layer.extend({
         enabled: true,
         marker: {},
         tooltip: {},
-        divIcon: {}
+        divIcon: {},
+        editor: {}
     },
     isEnabled: true,
     addedToMap: false,
@@ -136,7 +137,7 @@ const TextLayer = L.Layer.extend({
             return;
         }
 
-        this.editor = new MediumEditor(".leaflet-textlayer-tooltip");
+        this.editor = new MediumEditor(".leaflet-textlayer-tooltip", this.options.editor);
         this._disablePropogation();
     },
     _defaultOnRemoveCallback() {
@@ -148,7 +149,6 @@ const TextLayer = L.Layer.extend({
         this._enablePropogation();
     },
     _stopPropogation(e) {
-        console.log("stopping propogation");
         L.DomEvent.stopPropagation(e)
     },
     _enablePropogation() {

@@ -71,7 +71,7 @@ describe("TextLayer", () => {
             });
     });
 
-    it("enables and disables editing when enabled() and disable() are called", () => {
+    it("enables and disables editing when enable() and disable() are called", () => {
         cy.window().then(({ map, L }) => {
             let options = {
                 tooltip: {

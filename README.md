@@ -119,6 +119,7 @@ The options parameter lets you customise the way the layer looks and behaves. It
 |`marker`|`object`|`{}`|Allows custom options to be passed to the [Marker](https://leafletjs.com/reference-1.6.0.html#marker) created by the TextLayer.|
 |`tooltip`|`object`|`{}`|Allows custom options to be passed to the [Tooltip](https://leafletjs.com/reference-1.6.0.html#tooltip) created by the TextLayer.|
 |`divIcon`|`object`|`{}`|Allows custom options to be passed to the [DivIcon](https://leafletjs.com/reference-1.6.0.html#divicon) created by the TextLayer.|
+|`editor`|`object`|`{}`|Allows custom options to be passed to the default [MediumEditor](https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md) created by the TextLayer.|
 
 ### Properties
 

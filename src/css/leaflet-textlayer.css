@@ -1,3 +1,6 @@
+@import "~medium-editor/dist/css/medium-editor.min.css";
+@import "~medium-editor/dist/css/themes/bootstrap.min.css";
+
 .leaflet-textlayer-tooltip {
     padding: 0;
     background-color: initial;
