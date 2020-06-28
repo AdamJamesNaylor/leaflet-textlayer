@@ -1,8 +1,9 @@
 {
   "name": "leaflet-textlayer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Leaflet plugin for creating text layers with configurable text editing support",
   "main": "index.js",
+  "homepage": "https://github.com/AdamJamesNaylor/leaflet-textlayer#readme",
   "scripts": {
     "dev": "./node_modules/.bin/webpack --config=webpack.dev.js",
     "build": "./node_modules/.bin/webpack --config=webpack.build.js",
