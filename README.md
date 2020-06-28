@@ -129,6 +129,10 @@ The options parameter lets you customise the way the layer looks and behaves. It
 |`options`|`Object`|See Options section|The options currently applied to the TextLayer. Changing these will not dynamically update the TextLayer. See the Methods section for values that can be dynamically changed after creation.|
 |`isEnabled`|`Boolean`|`true`|Returns whether this layer is enabled for text editing. Can only be assigned via `enable()` and `disabled()`.|
 |`addedToMap`|`Boolean`|`false`|Returns `true` once the layer is added to a leaflet map.|
+|`marker`|`Marker`|`undefined`|The Marker created during `onAdd()`|
+|`tooltip`|`Tooltip`|`undefined`|The Tooltip created during `onAdd()`|
+|`divIcon`|`DivIcon`|`undefined`|The DivIcon created during `onAdd()`|
+|`editor`|`MediumEditor`|`undefined`|If using the default editor this property will be the initialised MediumEditor created during `onAdd`.|
 
 ### Methods
 
@@ -138,11 +142,10 @@ The options parameter lets you customise the way the layer looks and behaves. It
 |`setLatLng(<LatLng> latlng)`|`this`|Updates the latlng of the layer.|
 |`enable()`|`this`|Enables text editing for this layer.|
 |`disable()`|`this`|Disables text editing for this layer.|
-|
 
 ## Known issues
 
 |Issue|Work around|
 |-----|-----------|
 |Selecting text and then clicking outside of the layer will not deselect the text.|Deselect the text first by clicking inside the text layer once (without dragging) and then clicking outside.|
-|Text is displayed slightly below the latlng when added.|Possibly could be corrected with CSS but care must be taking with click regions for the marker layer.|
+|Text is displayed slightly below the latlng when added.|Possibly could be corrected with CSS but care must be taken with click regions for the marker layer.|
