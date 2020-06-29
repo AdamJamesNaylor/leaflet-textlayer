@@ -1,8 +1,8 @@
 {
   "name": "leaflet-textlayer",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Leaflet plugin for creating text layers with configurable text editing support",
-  "main": "index.js",
+  "main": "dist/leaflet-textlayer.min.js",
   "homepage": "https://github.com/AdamJamesNaylor/leaflet-textlayer#readme",
   "scripts": {
     "dev": "./node_modules/.bin/webpack --config=webpack.dev.js",
@@ -18,6 +18,9 @@
   "author": "Adam Naylor",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
     "cypress": "^4.8.0",
     "mini-css-extract-plugin": "^0.9.0",
@@ -27,5 +30,8 @@
   },
   "dependencies": {
     "medium-editor": "^5.23.3"
+  },
+  "peerDependencies": {
+    "leaflet": "^1.6.0"
   }
 }

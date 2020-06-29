@@ -7,11 +7,20 @@ module.exports = {
     mode: "production",
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "leaflet-textlayer.min.js"
+        filename: "leaflet-textlayer.min.js",
     },
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    },
+                },
+            },            {
                 test: /\.css$/,
                 use: [{
                     loader: MiniCssExtractPlugin.loader,

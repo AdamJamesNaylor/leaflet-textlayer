@@ -1,5 +1,3 @@
-import L from "leaflet";
-
 import MediumEditor from "medium-editor";
 
 import "../css/leaflet-textlayer.css";
@@ -8,26 +6,27 @@ import "../css/leaflet-textlayer.css";
  * Dynamically updates the interactive state of a layer (including LayerGroups).
  * Taken from https://github.com/Leaflet/Leaflet/issues/5442#issuecomment-424014428
  */
-L.Layer.prototype.setInteractive = function (interactive) {
-    if (this.getLayers) {
-        this.getLayers().forEach(layer => {
-            layer.setInteractive(interactive);
-        });
-        return;
+L.Layer.include({
+    setInteractive: function (interactive) {
+        if (this.getLayers) {
+            this.getLayers().forEach(layer => {
+                layer.setInteractive(interactive);
+            });
+            return;
+        }
+    
+        if (!this._container)
+            return;
+    
+        this.options.interactive = interactive;
+    
+        if (interactive) {
+            L.DomUtil.addClass(this._container, 'leaflet-clickable');
+        } else {
+            L.DomUtil.removeClass(this._container, 'leaflet-clickable');
+        }
     }
-
-    if (!this._container) {
-        return;
-    }
-
-    this.options.interactive = interactive;
-
-    if (interactive) {
-        L.DomUtil.addClass(this._container, 'leaflet-clickable');
-    } else {
-        L.DomUtil.removeClass(this._container, 'leaflet-clickable');
-    }
-};
+});
 
 /**
  * @class TextLayer
@@ -35,7 +34,7 @@ L.Layer.prototype.setInteractive = function (interactive) {
  *
  * Leaflet plugin for creating text layers with configurable text editing support
  */
-const TextLayer = L.Layer.extend({
+export var TextLayer = L.TextLayer = L.Layer.extend({
 
     text: "",
     latlng: [],
@@ -212,13 +211,18 @@ const TextLayer = L.Layer.extend({
     }
 });
 
-function textLayer(text, latlng, options) {
-    return L.textLayer ? new TextLayer(text, latlng, options) : null;
+L.TextLayer.fromFeatureLayer = function(featureLayer, textLayerOptions) {
+    if (!featureLayer)
+        return featureLayer;
+
+    if (!featureLayer.feature || !featureLayer.feature.properties)
+        throw "Cannot create a TextLayer from a FeatureLayer with no text property.";
+
+        let text = featureLayer.feature.properties.text;
+    let latlng = featureLayer.getLatLng();
+    return new L.textLayer(text, latlng, textLayerOptions);
 }
 
-L.TextLayer = TextLayer;
-L.textLayer = textLayer;
-
-export { TextLayer };
-export { textLayer };
-export default textLayer;
+L.textLayer = function (text, latlng, options) {
+	return new L.TextLayer(text, latlng, options);
+};

@@ -1,6 +1,18 @@
 describe("TextLayer", () => {
-    const mapSelector = "#map";
     
+    it("creates correct TextLayer from FeatureLayer", () => {
+        cy.window().then(({ map, L }) => {
+            let marker = L.marker([10,10]);
+            marker.feature = marker.toGeoJSON();
+            marker.feature.properties.text = "Some text";
+
+            let textlayer = L.TextLayer.fromFeatureLayer(marker);
+
+            assert.isTrue(marker.feature.properties.text == textlayer.text);
+            assert.isTrue(marker.getLatLng() == textlayer.latlng);
+        });
+    });
+
     it("updates correctly when setText() is called", () => {
         cy.window().then(({ map, L }) => {
             let options = {
@@ -138,7 +150,4 @@ describe("TextLayer", () => {
             assert.isFalse(textLayer.addedToMap);
         });
     });
-
-
-
 });  
