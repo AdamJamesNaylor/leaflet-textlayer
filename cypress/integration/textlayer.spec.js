@@ -1,5 +1,66 @@
 describe("TextLayer", () => {
-    
+
+    // it("doesn't propogate click events from text layer to map", () => {
+    //     cy.window().then(({ map, L }) => {
+    //         let options = {
+    //             tooltip: {
+    //                 className: "tooltip"
+    //             },
+    //         };
+            
+    //         L.textLayer("Stuff", [51.505, -0.09], options)
+    //             .addTo(map);
+
+    //         let propogated = false;
+    //         map.on("click", () => { propogated = true; });
+
+    //         cy.get(".tooltip")
+    //             .click();
+    //     });
+    // });
+
+    it("doesn't add a classname if none is provided", () => {
+        cy.window().then(({ map, L }) => {
+            L.textLayer("Stuff", [51.505, -0.09])
+                .addTo(map);
+
+            cy.get(".undefined").should("not.exist");
+        });
+    });
+
+    it("updates text property when editor is updated", () => {
+        cy.window().then(({ map, L }) => {
+            let options = {
+                tooltip: {
+                    className: "tooltip"
+                },
+            };
+
+            let textLayer = L.textLayer("Stuff", [51.505, -0.09], options)
+                .addTo(map);
+
+            cy.get(".tooltip")
+                .click()
+                .type("{backspace}{backspace}{backspace}{backspace}{del}") //clear the original text
+                .type("Some other stuff")
+                .then(() => {
+                    assert.isTrue(textLayer.text == textLayer.editor.getContent());
+                });
+        });
+    });
+
+    it("creates correct geoJson when toGeoJson() is called", () => {
+        cy.window().then(({ map, L }) => {
+            let textLayer = L.textLayer("geo json layer", [51.505, -0.09]);
+            let geoJson = textLayer.toGeoJSON();
+            assert.isTrue(geoJson.type == "Feature");
+            assert.isTrue(geoJson.geometry.type == "Point");
+            assert.isTrue(geoJson.geometry.coordinates[0] == textLayer.getLatLng().lng);
+            assert.isTrue(geoJson.geometry.coordinates[1] == textLayer.getLatLng().lat);
+            assert.isTrue(geoJson.properties.text == textLayer.text);
+        });
+    });
+
     it("creates correct TextLayer from FeatureLayer", () => {
         cy.window().then(({ map, L }) => {
             let marker = L.marker([10,10]);
@@ -9,7 +70,7 @@ describe("TextLayer", () => {
             let textlayer = L.TextLayer.fromFeatureLayer(marker);
 
             assert.isTrue(marker.feature.properties.text == textlayer.text);
-            assert.isTrue(marker.getLatLng() == textlayer.latlng);
+            assert.isTrue(marker.getLatLng() == textlayer.getLatLng());
         });
     });
 

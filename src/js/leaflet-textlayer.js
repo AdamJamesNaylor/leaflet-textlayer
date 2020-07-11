@@ -34,37 +34,35 @@ L.Layer.include({
  *
  * Leaflet plugin for creating text layers with configurable text editing support
  */
-export var TextLayer = L.TextLayer = L.Layer.extend({
+export var TextLayer = L.TextLayer = L.Marker.extend({
 
     text: "",
-    latlng: [],
     options: {
         enabled: true,
         marker: {},
-        tooltip: {},
-        divIcon: {},
+        tooltip: {
+            className: ""
+        },
+        divIcon: {
+            className: ""
+        },
         editor: {}
     },
     isEnabled: true,
     addedToMap: false,
 
     initialize(text, latlng, options) {
-        this.text = text;
-        this.latlng = latlng;
-
         L.setOptions(this, options);
+        L.Marker.prototype.initialize.call(this, latlng, this.options.marker)
+        this.text = text;
+
         if (!this.options.enabled)
             this.isEnabled = false;
 
         this._onAddCallback = this.options.onAddCallback ? this.options.onAddCallback : this._defaultOnAddCallback;
         this._onRemoveCallback = this.options.onRemoveCallback ? this.options.onRemoveCallback : this._defaultOnRemoveCallback;
 
-        L.stamp(this);
-    },
-    setLatLng(latlng) {
-        this.latlng = latlng;
-        this.marker.setLatLng(latlng);
-        return this;
+        //L.stamp(this);
     },
     setText(text) {
         this.text = text;
@@ -74,7 +72,7 @@ export var TextLayer = L.TextLayer = L.Layer.extend({
         if (this.editor)
             this.editor.setContent(text);
 
-        this.marker.setTooltipContent(text);
+        this.setTooltipContent(text);
         this._setDivIcon();
 
         return this;
@@ -121,14 +119,18 @@ export var TextLayer = L.TextLayer = L.Layer.extend({
         this._onRemoveCallback(map);
 
         if (this.marker) {
-            map.removeLayer(this.marker);
+            map.removeLayer(this);
             delete this.tooltip;
-            delete this.marker;
         }
 
         this.addedToMap = false;
 
         return this;
+    },
+    toGeoJSON(precision) {
+        let geoJson = L.Marker.prototype.toGeoJSON.call(this, precision);
+        geoJson.properties.text = this.text;
+        return geoJson;
     },
     _defaultOnAddCallback() {
         if (!this.options.enabled) {
@@ -137,6 +139,7 @@ export var TextLayer = L.TextLayer = L.Layer.extend({
         }
 
         this.editor = new MediumEditor(".leaflet-textlayer-tooltip", this.options.editor);
+        this.editor.subscribe("editableInput", () => this.text = this.editor.getContent());
         this._disablePropogation();
     },
     _defaultOnRemoveCallback() {
@@ -174,20 +177,19 @@ export var TextLayer = L.TextLayer = L.Layer.extend({
         let overriddenTooltipOptions = {...defaultTooltipOptions, ...this.options.tooltip}
         
         let requiredTooltipOptions = { permanent: true, direction: "bottom", interactive: true }; //cannot be overridden
-        requiredTooltipOptions.className = "leaflet-textlayer-tooltip " + this.options.tooltip.className;
+            requiredTooltipOptions.className = "leaflet-textlayer-tooltip " + this.options.tooltip.className;
 
         //combine 
         return {...overriddenTooltipOptions, ...requiredTooltipOptions};
     },
     _addMarker(map) {
-        this.marker = L.marker(this.latlng, this.options.marker);
-        this.marker.addTo(map);
-        this.marker.bindTooltip(this.text, this._tooltipOptions);
+        this.addTo(map);
+        this.bindTooltip(this.text, this._tooltipOptions);
 
-        this.tooltip = this.marker.getTooltip();
+        this.tooltip = this.getTooltip();
 
         //make sure child removal bubbles up to us
-        this.marker.on("remove", () => this.onRemove(map));
+        this.on("remove", () => this.onRemove(map));
         this.tooltip.on("remove", () => this.onRemove(map));
     },
     _setDivIcon() {
@@ -207,7 +209,7 @@ export var TextLayer = L.TextLayer = L.Layer.extend({
             className: "leaflet-textlayer-divicon " + this.options.divIcon.className
         };
         this.divIcon = L.divIcon({...this.options.divIcon, ...divIconOptions});
-        this.marker.setIcon(this.divIcon);
+        this.setIcon(this.divIcon);
     }
 });
 
