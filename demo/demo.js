@@ -57,3 +57,12 @@ map2.on('pm:globaldragmodetoggled', e => {
     textLayer.enable();
   }
 });
+map2.on('pm:globalremovemodetoggled', e => {
+  if (textLayer.isEnabled) {
+    console.log("disabling");
+    textLayer.disable();
+  } else {
+    console.log("enabling");
+    textLayer.enable();
+  }
+});
