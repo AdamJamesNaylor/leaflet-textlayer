@@ -1,6 +1,6 @@
 {
   "name": "leaflet-textlayer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Leaflet plugin for creating text layers with configurable text editing support",
   "main": "dist/leaflet-textlayer.min.js",
   "homepage": "https://github.com/AdamJamesNaylor/leaflet-textlayer#readme",
