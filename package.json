@@ -29,6 +29,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "leaflet": "^1.6.0",
     "medium-editor": "^5.23.3"
   },
   "peerDependencies": {
